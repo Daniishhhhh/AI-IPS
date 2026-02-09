@@ -1,30 +1,16 @@
-import numpy as np
-from .model_loader import xgb_primary, xgb_infiltration, scaler, label_encoder
+from engine.model_loader import xgb_model, label_encoder
 
 
-def ips_predict(sample):
+def ips_predict(processed_array):
     """
-    sample: numpy array of shape (1, 57)
+    Accepts already preprocessed & scaled numpy array.
+    Returns attack label and confidence.
     """
 
-    # Scale
-    sample_scaled = scaler.transform(sample)
+    prediction = xgb_model.predict(processed_array)[0]
+    probabilities = xgb_model.predict_proba(processed_array)[0]
 
-    # Primary model prediction
-    probs = xgb_primary.predict_proba(sample_scaled)[0]
-    pred_class = np.argmax(probs)
-    confidence = np.max(probs)
+    attack_label = label_encoder.inverse_transform([prediction])[0]
+    confidence = float(max(probabilities))
 
-    attack_label = label_encoder.inverse_transform([pred_class])[0]
-
-    # Secondary infiltration check
-    if confidence < 0.90:
-        probs_secondary = xgb_infiltration.predict_proba(sample_scaled)[0]
-        pred_secondary = np.argmax(probs_secondary)
-        attack_label_secondary = label_encoder.inverse_transform([pred_secondary])[0]
-
-        if attack_label_secondary == "INFILTRATION":
-            attack_label = "INFILTRATION"
-            confidence = np.max(probs_secondary)
-
-    return attack_label, float(confidence)
+    return attack_label, confidence

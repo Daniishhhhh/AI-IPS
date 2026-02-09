@@ -1,12 +1,9 @@
 import joblib
 import os
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+MODEL_DIR = os.path.join(BASE_DIR, "models")
 
-MODELS_PATH = os.path.join(BASE_DIR, "models")
-
-# Load models
-xgb_primary = joblib.load(os.path.join(MODELS_PATH, "xgb_flow_primary.pkl"))
-xgb_infiltration = joblib.load(os.path.join(MODELS_PATH, "xgb_flow_infiltration.pkl"))
-scaler = joblib.load(os.path.join(MODELS_PATH, "scaler.pkl"))
-label_encoder = joblib.load(os.path.join(MODELS_PATH, "label_encoder.pkl"))
+xgb_model = joblib.load(os.path.join(MODEL_DIR, "xgb_flow_model_v1.pkl"))
+scaler = joblib.load(os.path.join(MODEL_DIR, "scaler_flow_v1.pkl"))
+label_encoder = joblib.load(os.path.join(MODEL_DIR, "label_encoder_flow_v1.pkl"))

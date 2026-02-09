@@ -19,4 +19,9 @@ Thumbs.db
 .vscode/
 
 # Large experimental models
+rf_flow_model_v1.pkl
+models/rf_flow_model_v1.pkl
+*.h5
+*.joblib
 rf_ips_model.pkl
+models/rf_ips_model.pkl
