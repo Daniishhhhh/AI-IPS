@@ -3,7 +3,9 @@ from pydantic import BaseModel
 
 from engine.predictor import ips_predict
 from engine.decision_engine import ips_decision
-from utils.preprocessing import preprocess_input, FEATURE_NAMES
+from engine.predictor import ips_predict
+from engine.decision_engine import ips_decision
+from engine.model_loader import scaler
 
 
 app = FastAPI(title="AI-IPS Flow Detection API")
@@ -17,13 +19,13 @@ class FlowInput(BaseModel):
 def predict(flow: FlowInput):
 
     try:
-        missing = [f for f in FEATURE_NAMES if f not in flow.features]
+        # Validate features
+        missing = [f for f in scaler.feature_names_in_ if f not in flow.features]
         if missing:
             return {"error": f"Missing features: {missing}"}
 
-        processed = preprocess_input(flow.features)
-
-        attack, confidence = ips_predict(processed)
+        # Directly call predictor (no preprocessing here)
+        attack, confidence = ips_predict(flow.features)
 
         action = ips_decision(attack, confidence)
 
