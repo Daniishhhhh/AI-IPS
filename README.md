@@ -1,301 +1,377 @@
-🛡️ AI-IPS
-Intelligent Network Intrusion Prevention System
+# 🛡️ AI-IPS — Intelligent Intrusion Prevention System
 
-CIC-IDS2018 + CSE-CIC-IDS2018 | XGBoost Production Model | FastAPI Deployment
+## Real-Time AI-Powered Network Threat Detection & Prevention
 
-📌 Project Overview
+AI-IPS is a **real-time Intrusion Detection and Prevention System (IDPS)** that leverages **Machine Learning and Deep Learning models** to monitor live network traffic, detect malicious behavior, classify attack types, and automatically recommend or trigger mitigation actions.
 
-AI-IPS is a production-ready, machine learning–driven Intrusion Prevention System (IPS) designed to detect and respond to modern network attacks in real time.
+The system combines **flow-based network monitoring**, **hybrid AI classification**, and **automated decision engines** to provide an intelligent cybersecurity defense layer suitable for research, enterprise environments, and academic projects.
 
-This system is built using:
+---
 
-CIC-IDS2018 dataset
+## 🎯 Project Objectives
 
-CSE-CIC-IDS2018 dataset
+Modern networks face continuously evolving cyber threats. Traditional signature-based systems struggle to detect:
 
-XGBoost (Production Model – v1.0)
+* Zero-day attacks
+* Unknown anomalies
+* Sophisticated attack patterns
+* High-volume distributed threats
 
-Random Forest (Baseline Model)
+AI-IPS aims to solve these challenges by providing:
 
-FastAPI for inference deployment
+✅ Real-time packet capture and flow extraction
+✅ AI-driven threat detection using hybrid models
+✅ Attack classification with confidence scoring
+✅ Automated prevention recommendations
+✅ Extensible architecture for deployment environments
+✅ Research-grade cybersecurity experimentation platform
 
-The system performs:
+---
 
-Flow-level attack classification
+## 🚀 Key Features
 
-Confidence scoring
+### 🔍 Real-Time Network Monitoring
 
-Automated prevention decision mapping
+* Live packet capture using **Scapy**
+* Automatic flow generation (NetFlow-like features)
+* Supports TCP and UDP protocols
+* Configurable flow timeout and feature extraction
 
-API-based real-time detection
+### 🧠 Hybrid AI Detection Engine
 
-🎯 Problem Statement
+Two-stage AI pipeline:
 
-Modern enterprise networks face increasing threats such as:
+1️⃣ **Binary Classification (UNSW-NB15 Model)**
 
-DDoS
+* Detects whether traffic is benign or malicious
 
-DoS
+2️⃣ **Multi-Class Classification (CIC-IDS Flow Model)**
 
-Brute Force
+* Identifies attack category (DoS, Probe, Exploit, etc.)
 
-Botnet
+This hybrid architecture improves both **accuracy and interpretability**.
 
-PortScan
+### ⚡ Automated Decision Engine
 
-Infiltration
+* Converts AI predictions into actionable responses
+* Example actions:
 
-Traditional signature-based IDS systems fail against evolving threats and unknown variants.
+  * ALLOW
+  * ALERT
+  * BLOCK
+  * MONITOR
 
-This project aims to:
+Designed for integration with firewalls and SIEM tools.
 
-Build a high-accuracy ML-based detection engine
+### 📊 Feature Engineering Pipeline
 
-Reduce false positives
+Extracted features include:
 
-Improve infiltration detection
+* Flow duration
+* Packet counts
+* Byte counts
+* Packet rate
+* TCP flag counts (SYN, ACK, RST)
+* Flow statistics
 
-Enable automated prevention decisions
+Compatible with ML training datasets.
 
-Provide modular extensibility (UNSW module upcoming)
+### 🛠️ Prevention Module (Extensible)
 
-🏗️ Architecture Overview
-Incoming Flow Data
-        ↓
-Preprocessing (Feature Order + Scaling)
-        ↓
-XGBoost Flow Model (v1)
-        ↓
-Label Decoding
-        ↓
-Decision Engine
-        ↓
-Recommended Action (IPS Response)
+* Architecture supports automatic blocking via:
 
-📊 Current Model Performance (CIC + CSE v1)
-XGBoost Production Model
+  * Windows Firewall
+  * iptables
+  * Network controllers
+* Currently includes decision-level recommendations
 
-Accuracy: 94.99%
+### 🌐 API Integration
 
-Weighted F1: 0.95
+* FastAPI backend for:
 
-Strong detection for:
+  * Predictions
+  * Monitoring
+  * Integration with dashboards
+  * External systems
 
-DDOS
+### 📈 Model Confidence Scoring
 
-DOS
+Each prediction includes:
 
-BOT
+* Attack type
+* Confidence score
+* Recommended action
 
-PORTSCAN
+---
 
-BRUTEFORCE
+## 🧠 AI Architecture
 
-Moderate detection for:
+Hybrid Detection Pipeline:
 
-INFILTRATION (improvement planned)
+Packet Capture → Flow Extraction → Feature Engineering →
+Binary Model (UNSW) → If Malicious → Multi-Class Model (CIC) →
+Decision Engine → Prevention Action
 
-API Validation Accuracy
+This approach reduces false positives while maintaining high detection capability.
 
-End-to-end API test accuracy:
+---
 
-88.57%
+## 🏗️ System Architecture
 
+### 1️⃣ Data Layer
 
-This reflects real-world inference performance.
+* Real-time packets
+* Flow generation
+* Feature vectors
 
-📁 Project Structure
+### 2️⃣ AI Layer
+
+* Binary intrusion model
+* Multi-class attack classifier
+* Scalers and encoders
+
+### 3️⃣ Decision Layer
+
+* Hybrid decision logic
+* Action mapping
+
+### 4️⃣ Prevention Layer
+
+* Firewall integration (extensible)
+* Response automation
+
+### 5️⃣ API Layer
+
+* FastAPI endpoints
+* Dashboard integration
+
+---
+
+## 🛠️ Tech Stack
+
+**Programming Language**
+
+* Python 3.10+
+
+**Networking**
+
+* Scapy
+
+**Machine Learning**
+
+* Scikit-learn
+* TensorFlow / Keras (for DL models if used)
+
+**Backend**
+
+* FastAPI
+* Uvicorn
+
+**Data Processing**
+
+* Pandas
+* NumPy
+
+**Model Storage**
+
+* Joblib / Pickle
+
+**Deployment**
+
+* Virtual Environment / Docker (optional)
+
+---
+
+## 📂 Project Structure
+
+```
 AI-IPS/
 │
-├── api/
-│   └── app.py
-│
 ├── engine/
-│   ├── model_loader.py
-│   ├── predictor.py
-│   └── decision_engine.py
+│   ├── model_loader.py        # Load trained models & scalers
+│   ├── predictor.py           # Hybrid prediction pipeline
+│   ├── decision_engine.py     # Action decision logic
 │
-├── utils/
-│   └── preprocessing.py
+├── realtime_engine/
+│   ├── flow_collector.py      # Packet capture & flow extraction
+│   ├── test_realtime.py       # Real-time testing script
+│
+├── prevention_module/
+│   ├── firewall.py            # Blocking logic (optional)
 │
 ├── models/
-│   ├── xgb_flow_model_v1.pkl
-│   ├── scaler_flow_v1.pkl
-│   ├── label_encoder_flow_v1.pkl
+│   ├── unsw_model.pkl
+│   ├── flow_model.pkl
+│   ├── scalers/
 │
-├── test_api.py
+├── api/
+│   ├── app.py                 # FastAPI application
+│
+├── utils/
+│
 ├── requirements.txt
+├── main.py
 └── README.md
+```
 
-📦 Model Files (Stored on Google Drive)
+---
 
-Large models are stored separately.
+## ⚙️ Installation & Setup
 
-Download models from:
+### 1️⃣ Clone Repository
 
-https://drive.google.com/drive/folders/1wdymHdOO-XliM08TnqnCjhyEZ7EqhtCK
-
-
-Place them inside:
-
-AI-IPS/models/
-
-
-Required files:
-
-xgb_flow_model_v1.pkl
-
-scaler_flow_v1.pkl
-
-label_encoder_flow_v1.pkl
-
-⚙️ Setup Instructions
-1️⃣ Clone Repository
-git clone https://github.com/Daniishhhhh/AI-IPS.git
+```bash
+git clone https://github.com/yourusername/AI-IPS.git
 cd AI-IPS
+```
 
-2️⃣ Create Virtual Environment
+### 2️⃣ Create Virtual Environment
+
+```bash
 python -m venv .venv
-
+```
 
 Activate:
 
 Windows:
 
+```bash
 .venv\Scripts\activate
+```
 
+Linux / Mac:
 
-Mac/Linux:
-
+```bash
 source .venv/bin/activate
+```
 
-3️⃣ Install Dependencies
+### 3️⃣ Install Dependencies
+
+```bash
 pip install -r requirements.txt
+```
 
-4️⃣ Download Models
+---
 
-Download from Google Drive and place inside:
+## ▶️ Running the System
 
-AI-IPS/models/
+### 🔹 Start Real-Time Packet Monitoring
 
-🚀 Running the API
+```bash
+python -m realtime_engine.test_realtime
+```
 
-Start server:
+Run terminal as **Administrator** for packet capture permissions.
 
+### 🔹 Start API Server
+
+```bash
 uvicorn api.app:app --reload
+```
 
+API Docs:
 
-Server runs at:
+```
+http://127.0.0.1:8000/docs
+```
 
-http://127.0.0.1:8000
+---
 
+## 🧪 Testing with Traffic
 
-Test endpoint:
+You can generate traffic using:
 
-GET /
+```bash
+ping google.com
+```
 
+Or simulate connections:
 
-Prediction endpoint:
+```bash
+Test-NetConnection 127.0.0.1 -Port 80
+```
 
-POST /predict
+For malicious simulation tools (lab only):
 
-📡 Example Prediction Request
+* Nmap
+* Hping3
+* Metasploit
+
+---
+
+## 📊 Example Output
+
+```
+Flow expired: ('192.168.1.5', '8.8.8.8', 443, 52344, 'tcp')
+Duration: 3.02
+Packets: 12
+Bytes: 2048
+
+AI RESULT:
 {
-  "features": {
-    "flow_duration": 12345,
-    "flow_bytes_per_s": 4500,
-    ...
-  }
+  'attack_type': 'BENIGN',
+  'confidence': 0.9999,
+  'recommended_action': 'ALLOW'
 }
+```
 
+---
 
-Response:
+## 🔮 Future Enhancements
 
-{
-  "attack_type": "DDOS",
-  "confidence": 0.9987,
-  "recommended_action": "BLOCK_IP_IMMEDIATELY"
-}
+* Deep Learning models (BiLSTM / CNN)
+* Web dashboard visualization
+* Automated firewall blocking
+* SIEM integration
+* Distributed monitoring agents
+* Kubernetes deployment
+* Threat intelligence feeds
+* Explainable AI (XAI) insights
 
-🔐 IPS Decision Mapping
-Attack Type	Recommended Action
-BENIGN	ALLOW
-DDOS	BLOCK_IP_IMMEDIATELY
-DOS	RATE_LIMIT
-BRUTEFORCE	THROTTLE_AND_MONITOR
-BOT	ISOLATE_HOST
-PORTSCAN	BLOCK_IP_TEMPORARY
-INFILTRATION	ESCALATE_TO_ADMIN
-🧪 API Testing
+---
 
-Run:
+## ⚠️ Security & Ethical Use
 
-python test_api.py
+This project is intended for:
 
+* Educational use
+* Research environments
+* Authorized security testing
 
-This:
+Do NOT deploy or test on networks without permission.
 
-Loads structured test flows
+---
 
-Sends requests to API
+## 🤝 Contribution
 
-Prints prediction + confidence
+Contributions are welcome.
 
-Calculates accuracy
+Steps:
 
-🧠 Engineering Decisions
+1. Fork repository
+2. Create feature branch
+3. Commit changes
+4. Push branch
+5. Open Pull Request
 
-✔ Feature order strictly preserved from scaler
-✔ Production model versioning (v1)
-✔ Model and preprocessing consistency enforced
-✔ Separate decision engine
-✔ Modular design (UNSW ready)
-✔ No large files pushed to GitHub
+---
 
-📌 Known Limitations (v1)
+## 📜 License
 
-Infiltration recall moderate
+MIT License
 
-Trained only on CIC+CSE datasets
+---
 
-No real-time packet capture integration yet
+## 👨‍💻 Author
 
-🛣️ Roadmap
-v1.1
+Developed as an AI-based cybersecurity research and implementation project.
 
-Improve INFILTRATION recall
+---
 
-Threshold tuning
+## ⭐ Vision
 
-v2.0
+> “Intelligent networks require intelligent defense.”
 
-Add UNSW-NB15 detection module
+AI-IPS aims to combine artificial intelligence with cybersecurity to create adaptive, real-time protection systems.
 
-Dual-model architecture
-
-Ensemble IPS engine
-
-v3.0
-
-Real-time packet capture integration
-
-Dashboard monitoring
-
-Containerized deployment
-
-👨‍💻 Author
-
-Danish Sidiq
-AI Security & Network Defense Research
-
-📜 License
-
-This project is developed for research and academic purposes.
-For enterprise usage, further validation and compliance review is recommended.
-
-🔥 Current Status
-
-✅ CIC+CSE Flow Model Locked
-✅ API Production Ready
-✅ GitHub Versioned
-⏳ Moving to UNSW Module Next
+---
