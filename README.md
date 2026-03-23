@@ -1,377 +1,334 @@
-# 🛡️ AI-IPS — Intelligent Intrusion Prevention System
+# 🛡️ AI-IPS — AI-Powered Intrusion Prevention System
 
-## Real-Time AI-Powered Network Threat Detection & Prevention
+## 📌 Overview
 
-AI-IPS is a **real-time Intrusion Detection and Prevention System (IDPS)** that leverages **Machine Learning and Deep Learning models** to monitor live network traffic, detect malicious behavior, classify attack types, and automatically recommend or trigger mitigation actions.
+AI-IPS is a **real-time AI-powered Intrusion Detection and Prevention System** designed to monitor network traffic, detect malicious activity, classify attack types, and recommend automated security actions.
 
-The system combines **flow-based network monitoring**, **hybrid AI classification**, and **automated decision engines** to provide an intelligent cybersecurity defense layer suitable for research, enterprise environments, and academic projects.
+The system combines:
 
----
+* **Machine Learning-based threat detection**
+* **Real-time network flow processing**
+* **Security decision intelligence**
+* **Interactive monitoring dashboard**
 
-## 🎯 Project Objectives
-
-Modern networks face continuously evolving cyber threats. Traditional signature-based systems struggle to detect:
-
-* Zero-day attacks
-* Unknown anomalies
-* Sophisticated attack patterns
-* High-volume distributed threats
-
-AI-IPS aims to solve these challenges by providing:
-
-✅ Real-time packet capture and flow extraction
-✅ AI-driven threat detection using hybrid models
-✅ Attack classification with confidence scoring
-✅ Automated prevention recommendations
-✅ Extensible architecture for deployment environments
-✅ Research-grade cybersecurity experimentation platform
+This project bridges the gap between **academic ML models** and **practical cybersecurity systems**, demonstrating how AI can be integrated into real-world network defense pipelines.
 
 ---
 
-## 🚀 Key Features
+## 🎯 Objectives
 
-### 🔍 Real-Time Network Monitoring
-
-* Live packet capture using **Scapy**
-* Automatic flow generation (NetFlow-like features)
-* Supports TCP and UDP protocols
-* Configurable flow timeout and feature extraction
-
-### 🧠 Hybrid AI Detection Engine
-
-Two-stage AI pipeline:
-
-1️⃣ **Binary Classification (UNSW-NB15 Model)**
-
-* Detects whether traffic is benign or malicious
-
-2️⃣ **Multi-Class Classification (CIC-IDS Flow Model)**
-
-* Identifies attack category (DoS, Probe, Exploit, etc.)
-
-This hybrid architecture improves both **accuracy and interpretability**.
-
-### ⚡ Automated Decision Engine
-
-* Converts AI predictions into actionable responses
-* Example actions:
-
-  * ALLOW
-  * ALERT
-  * BLOCK
-  * MONITOR
-
-Designed for integration with firewalls and SIEM tools.
-
-### 📊 Feature Engineering Pipeline
-
-Extracted features include:
-
-* Flow duration
-* Packet counts
-* Byte counts
-* Packet rate
-* TCP flag counts (SYN, ACK, RST)
-* Flow statistics
-
-Compatible with ML training datasets.
-
-### 🛠️ Prevention Module (Extensible)
-
-* Architecture supports automatic blocking via:
-
-  * Windows Firewall
-  * iptables
-  * Network controllers
-* Currently includes decision-level recommendations
-
-### 🌐 API Integration
-
-* FastAPI backend for:
-
-  * Predictions
-  * Monitoring
-  * Integration with dashboards
-  * External systems
-
-### 📈 Model Confidence Scoring
-
-Each prediction includes:
-
-* Attack type
-* Confidence score
-* Recommended action
-
----
-
-## 🧠 AI Architecture
-
-Hybrid Detection Pipeline:
-
-Packet Capture → Flow Extraction → Feature Engineering →
-Binary Model (UNSW) → If Malicious → Multi-Class Model (CIC) →
-Decision Engine → Prevention Action
-
-This approach reduces false positives while maintaining high detection capability.
+* Detect malicious network traffic in real-time
+* Classify different types of cyber attacks
+* Provide automated prevention recommendations
+* Maintain a persistent log of security events
+* Build a deployable ML microservice (FastAPI)
+* Visualize results through a frontend dashboard
 
 ---
 
 ## 🏗️ System Architecture
 
-### 1️⃣ Data Layer
-
-* Real-time packets
-* Flow generation
-* Feature vectors
-
-### 2️⃣ AI Layer
-
-* Binary intrusion model
-* Multi-class attack classifier
-* Scalers and encoders
-
-### 3️⃣ Decision Layer
-
-* Hybrid decision logic
-* Action mapping
-
-### 4️⃣ Prevention Layer
-
-* Firewall integration (extensible)
-* Response automation
-
-### 5️⃣ API Layer
-
-* FastAPI endpoints
-* Dashboard integration
+```
+                 ┌──────────────────────────────┐
+                 │   Network Traffic (Packets)  │
+                 └──────────────┬───────────────┘
+                                │
+                                ▼
+                    ┌─────────────────────┐
+                    │  Scapy Packet Sniff │
+                    └─────────┬──────────┘
+                              │
+                              ▼
+                ┌───────────────────────────┐
+                │ Flow Aggregation Engine   │
+                │ (Session-based grouping)  │
+                └─────────┬─────────────────┘
+                          │
+                          ▼
+                ┌───────────────────────────┐
+                │ Feature Extraction Layer  │
+                └─────────┬─────────────────┘
+                          │
+                          ▼
+        ┌──────────────────────────────────────────┐
+        │ Hybrid AI Detection Pipeline             │
+        │                                          │
+        │  Stage 1: Binary Classifier (UNSW-NB15)  │
+        │  → Benign / Attack                       │
+        │                                          │
+        │  Stage 2: Multi-class Model (CIC-IDS)    │
+        │  → DDOS / DOS / BOT / etc                │
+        └─────────┬────────────────────────────────┘
+                  │
+                  ▼
+        ┌──────────────────────────────┐
+        │ Decision Engine              │
+        │ (Policy-based responses)     │
+        └─────────┬────────────────────┘
+                  │
+                  ▼
+        ┌──────────────────────────────┐
+        │ Actions                      │
+        │ ALLOW / BLOCK / ALERT        │
+        └─────────┬────────────────────┘
+                  │
+                  ▼
+        ┌──────────────────────────────┐
+        │ Logging (SQLite DB)          │
+        └─────────┬────────────────────┘
+                  │
+                  ▼
+        ┌──────────────────────────────┐
+        │ Frontend Dashboard (Next.js) │
+        └──────────────────────────────┘
+```
 
 ---
 
-## 🛠️ Tech Stack
+## 🤖 Machine Learning Models
 
-**Programming Language**
+### 1️⃣ Binary Classification Model
 
-* Python 3.10+
+* **Dataset:** UNSW-NB15
+* **Purpose:** Detect whether traffic is malicious or benign
+* **Algorithm:** XGBoost / Random Forest
+* **Output:** Binary (0 = Benign, 1 = Attack)
 
-**Networking**
+---
 
-* Scapy
+### 2️⃣ Multi-Class Classification Model
 
-**Machine Learning**
+* **Dataset:** CIC-IDS / CSE-CIC
+* **Purpose:** Identify specific attack type
+* **Algorithm:** XGBoost
+* **Output Classes:**
 
-* Scikit-learn
-* TensorFlow / Keras (for DL models if used)
+  * BENIGN
+  * DDOS
+  * DOS
+  * BOT
+  * BRUTEFORCE
+  * PORTSCAN
+  * INFILTRATION
 
-**Backend**
+---
 
+### 3️⃣ Hybrid Detection Pipeline
+
+* Stage 1 filters traffic (fast binary detection)
+* Stage 2 classifies attack type (only if needed)
+* Improves efficiency and scalability
+
+---
+
+## 🛡️ Attack Types Detected
+
+| Attack Type  | Description                   |
+| ------------ | ----------------------------- |
+| BENIGN       | Normal traffic                |
+| DDOS         | Distributed Denial of Service |
+| DOS          | Denial of Service             |
+| BOT          | Botnet activity               |
+| BRUTEFORCE   | Password guessing attacks     |
+| PORTSCAN     | Port probing                  |
+| INFILTRATION | Unauthorized internal access  |
+
+---
+
+## ⚙️ Decision Engine Logic
+
+The system maps predictions to actions:
+
+| Attack Type  | Action               |
+| ------------ | -------------------- |
+| BENIGN       | ALLOW                |
+| DDOS         | BLOCK_IP_IMMEDIATELY |
+| DOS          | RATE_LIMIT           |
+| BOT          | ISOLATE_HOST         |
+| BRUTEFORCE   | THROTTLE_AND_MONITOR |
+| PORTSCAN     | BLOCK_IP_TEMPORARY   |
+| INFILTRATION | ESCALATE_TO_ADMIN    |
+
+Low confidence → `MONITOR`
+
+---
+
+## 🚀 Features
+
+* Real-time prediction API using FastAPI
+* Hybrid ML detection pipeline
+* Feature alignment to avoid data mismatch
+* Latency tracking (binary + multiclass)
+* SQLite-based persistent logging
+* Frontend dashboard (Next.js + Tailwind)
+* Manual testing via JSON input
+* Color-coded attack visualization
+
+---
+
+## 🧪 API Endpoints
+
+### POST `/predict`
+
+Predict intrusion from input features
+
+```json
+{
+  "features": {
+    "flow_duration": 1577064,
+    "packet_length_mean": 123.0,
+    ...
+  }
+}
+```
+
+### GET `/events/recent`
+
+Fetch recent security events
+
+### GET `/debug/features`
+
+Get required feature list
+
+---
+
+## 💻 Tech Stack
+
+### Backend
+
+* Python
 * FastAPI
-* Uvicorn
+* Scikit-learn
+* XGBoost
+* Pandas / NumPy
+* Scapy (packet capture)
+* SQLite
 
-**Data Processing**
+### Frontend
 
-* Pandas
-* NumPy
-
-**Model Storage**
-
-* Joblib / Pickle
-
-**Deployment**
-
-* Virtual Environment / Docker (optional)
+* Next.js
+* TypeScript
+* Tailwind CSS
+* Axios
 
 ---
 
-## 📂 Project Structure
+## 🗂️ Project Structure
 
 ```
 AI-IPS/
 │
-├── engine/
-│   ├── model_loader.py        # Load trained models & scalers
-│   ├── predictor.py           # Hybrid prediction pipeline
-│   ├── decision_engine.py     # Action decision logic
+├── AI-IPS_Backend/
+│   ├── api/
+│   ├── engine/
+│   ├── database/
+│   ├── models/
+│   └── scalers/
 │
-├── realtime_engine/
-│   ├── flow_collector.py      # Packet capture & flow extraction
-│   ├── test_realtime.py       # Real-time testing script
+├── AI-IPS_Frontend/
+│   ├── src/app/
+│   ├── components/
+│   └── lib/
 │
-├── prevention_module/
-│   ├── firewall.py            # Blocking logic (optional)
-│
-├── models/
-│   ├── unsw_model.pkl
-│   ├── flow_model.pkl
-│   ├── scalers/
-│
-├── api/
-│   ├── app.py                 # FastAPI application
-│
-├── utils/
-│
-├── requirements.txt
-├── main.py
 └── README.md
 ```
 
 ---
 
-## ⚙️ Installation & Setup
+## 📊 Performance Metrics
 
-### 1️⃣ Clone Repository
-
-```bash
-git clone https://github.com/yourusername/AI-IPS.git
-cd AI-IPS
-```
-
-### 2️⃣ Create Virtual Environment
-
-```bash
-python -m venv .venv
-```
-
-Activate:
-
-Windows:
-
-```bash
-.venv\Scripts\activate
-```
-
-Linux / Mac:
-
-```bash
-source .venv/bin/activate
-```
-
-### 3️⃣ Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
+* Real-time inference latency: **10–50 ms**
+* Hybrid pipeline improves efficiency
+* High confidence detection (>0.9 for attacks)
+* Supports scalable deployment via API
 
 ---
 
-## ▶️ Running the System
+## 🔄 How It Works (Flow Summary)
 
-### 🔹 Start Real-Time Packet Monitoring
-
-```bash
-python -m realtime_engine.test_realtime
-```
-
-Run terminal as **Administrator** for packet capture permissions.
-
-### 🔹 Start API Server
-
-```bash
-uvicorn api.app:app --reload
-```
-
-API Docs:
-
-```
-http://127.0.0.1:8000/docs
-```
+1. Network traffic is captured (Scapy)
+2. Packets are grouped into flows
+3. Features are extracted
+4. Binary model checks for attack
+5. Multi-class model identifies attack type
+6. Decision engine determines action
+7. Event is logged into database
+8. Dashboard displays results
 
 ---
 
-## 🧪 Testing with Traffic
+## ⚠️ Current Limitations
 
-You can generate traffic using:
-
-```bash
-ping google.com
-```
-
-Or simulate connections:
-
-```bash
-Test-NetConnection 127.0.0.1 -Port 80
-```
-
-For malicious simulation tools (lab only):
-
-* Nmap
-* Hping3
-* Metasploit
-
----
-
-## 📊 Example Output
-
-```
-Flow expired: ('192.168.1.5', '8.8.8.8', 443, 52344, 'tcp')
-Duration: 3.02
-Packets: 12
-Bytes: 2048
-
-AI RESULT:
-{
-  'attack_type': 'BENIGN',
-  'confidence': 0.9999,
-  'recommended_action': 'ALLOW'
-}
-```
+* No real firewall integration yet
+* Uses offline-trained models
+* Limited dataset generalization
+* No distributed streaming (Kafka)
 
 ---
 
 ## 🔮 Future Enhancements
 
-* Deep Learning models (BiLSTM / CNN)
-* Web dashboard visualization
-* Automated firewall blocking
+* Real firewall blocking (iptables / Windows firewall)
+* Kafka-based real-time streaming
+* Deep learning models (LSTM / CNN)
+* Docker deployment
+* Cloud deployment (AWS/GCP)
 * SIEM integration
-* Distributed monitoring agents
-* Kubernetes deployment
-* Threat intelligence feeds
-* Explainable AI (XAI) insights
+* Alert system (email/SMS)
 
 ---
 
-## ⚠️ Security & Ethical Use
+## 📚 References / Sources
 
-This project is intended for:
+1. **UNSW-NB15 Dataset**
+   https://research.unsw.edu.au/projects/unsw-nb15-dataset
 
-* Educational use
-* Research environments
-* Authorized security testing
+2. **CIC-IDS2017 Dataset**
+   https://www.unb.ca/cic/datasets/ids-2017.html
 
-Do NOT deploy or test on networks without permission.
+3. **Scapy Documentation**
+   https://scapy.net/
+
+4. **FastAPI Documentation**
+   https://fastapi.tiangolo.com/
+
+5. **XGBoost Documentation**
+   https://xgboost.readthedocs.io/
+
+6. **Scikit-learn Documentation**
+   https://scikit-learn.org/
+
+7. Research Paper:
+
+   * *Moustafa & Slay (2015)* — UNSW-NB15 Dataset Analysis
+   * *Sharafaldin et al. (2018)* — CICIDS Dataset Paper
 
 ---
 
-## 🤝 Contribution
+## 🎯 Conclusion
 
-Contributions are welcome.
+AI-IPS demonstrates a **practical implementation of AI in cybersecurity**, combining:
 
-Steps:
+* Real-time data processing
+* Machine learning-based threat detection
+* Intelligent decision-making
+* Interactive monitoring
 
-1. Fork repository
-2. Create feature branch
-3. Commit changes
-4. Push branch
-5. Open Pull Request
-
----
-
-## 📜 License
-
-MIT License
+It serves as a strong foundation for building **production-grade intrusion prevention systems**.
 
 ---
 
 ## 👨‍💻 Author
 
-Developed as an AI-based cybersecurity research and implementation project.
+Danish Sidiq
+Irshad Ahmad S
+Computer Science Engineering
 
 ---
 
-## ⭐ Vision
+## ⭐ Final Note
 
-> “Intelligent networks require intelligent defense.”
-
-AI-IPS aims to combine artificial intelligence with cybersecurity to create adaptive, real-time protection systems.
+This project represents a transition from:
+👉 Academic ML → Real-world AI system design
 
 ---
