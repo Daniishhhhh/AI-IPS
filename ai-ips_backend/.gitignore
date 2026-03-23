@@ -1,0 +1,27 @@
+# Virtual environments
+.venv311/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+
+# Large experimental models
+rf_flow_model_v1.pkl
+models/rf_flow_model_v1.pkl
+*.h5
+*.joblib
+rf_ips_model.pkl
+models/rf_ips_model.pkl

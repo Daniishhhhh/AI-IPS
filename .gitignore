@@ -1,27 +1,30 @@
-# Virtual environments
-.venv311/
-venv/
-env/
-
-# Python cache
-__pycache__/
+# ========================
+# Python (Backend)
+# ========================
+AI-IPS_Backend/.venv/
+AI-IPS_Backend/__pycache__/
 *.pyc
-*.pyo
 
-# Logs
-*.log
+# Root venv (IMPORTANT FIX)
+.venv/
 
+# Models (large files)
+AI-IPS_Backend/models/
+AI-IPS_Backend/scalers/
+
+# ========================
+# Node (Frontend)
+# ========================
+AI-IPS_Frontend/node_modules/
+AI-IPS_Frontend/.next/
+
+# ========================
+# Database / logs
+# ========================
+*.db
+
+# ========================
 # OS files
+# ========================
 .DS_Store
 Thumbs.db
-
-# IDE
-.vscode/
-
-# Large experimental models
-rf_flow_model_v1.pkl
-models/rf_flow_model_v1.pkl
-*.h5
-*.joblib
-rf_ips_model.pkl
-models/rf_ips_model.pkl
